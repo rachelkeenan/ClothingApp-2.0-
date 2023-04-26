@@ -1,4 +1,7 @@
-const ItemForSale = () => {
+import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
+
+export default function ItemsForSale(){
     //dataSource contains the data we want rendered as a list
     //the dataSource should contain a unique key for each item in the array
  
@@ -44,4 +47,3 @@ const styles = StyleSheet.create({
     }
   });  
  
-export default ItemsForSale;

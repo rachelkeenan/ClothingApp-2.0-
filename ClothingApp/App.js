@@ -21,7 +21,7 @@ export default function App() {
     <Stack.Screen name='Home' component={Home} />
     <Stack.Screen name='Items For Sale' component={ItemsForSale} />  
     <Stack.Screen name='Post an Item' component={PostAnItem} />
-    <Stack.Screen name='My Cart' component={MyCart} />
+    {/* <Stack.Screen name='My Cart' component={MyCart} /> */}
     <Stack.Screen name='My History' component={myHistory} />
     </Stack.Navigator>    
     </NavigationContainer>  
