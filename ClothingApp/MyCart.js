@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 
-export default function myHistory({ navigation }) {
+export default function MyCart({ navigation }) {
   const [items, setItems] = useState([
     {
       id: '1',

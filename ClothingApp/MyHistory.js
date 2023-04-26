@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 
-export default function myHistory({ navigation }) {
+export default function MyHistory({ navigation }) {
   const [items, setItems] = useState([
     {
       id: '1',
@@ -34,7 +34,7 @@ export default function myHistory({ navigation }) {
       id: '4',
       name: 'Light Blue Madewell Jeans',
       size: '25',
-     // image: require('./assets/item4.jpg'),
+      image: require('sp-pgm-dc-11.jpg'),
       price: 69.99,
       description: 'Straight leg light blue jeans.',
       caption: 'Sold'

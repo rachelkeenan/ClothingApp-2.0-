@@ -15,7 +15,7 @@ export default function Home( { navigation }) {
         {key: '001', tab: 'Items for Sale', location: 'Items For Sale'},
         {key: '002', tab: 'Post an Item', location: 'Post an Item'},
         {key: '003', tab: 'My Cart', location: 'My Cart'},
-        {key: '004', tab: 'Previous Posts', location: 'My History'}
+        {key: '004', tab: 'My History', location: 'My History'}
       ];
     
         //const [tab, setTab] = useState(dataSource);
