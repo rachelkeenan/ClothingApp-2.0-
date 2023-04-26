@@ -5,7 +5,7 @@ import Home from './Home';
 import ItemsForSale from './ItemsForSale';
 import PostAnItem from './PostAnItem';
 import MyCart from './MyCart';
-import MyHistory from './MyHistory';
+import myHistory from './MyHistory';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -22,7 +22,7 @@ export default function App() {
     <Stack.Screen name='Items For Sale' component={ItemsForSale} />  
     <Stack.Screen name='Post an Item' component={PostAnItem} />
     <Stack.Screen name='My Cart' component={MyCart} />
-    <Stack.Screen name='My History' component={MyHistory} />
+    <Stack.Screen name='My History' component={myHistory} />
     </Stack.Navigator>    
     </NavigationContainer>  
   );

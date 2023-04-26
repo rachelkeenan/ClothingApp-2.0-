@@ -1,48 +1,48 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
 
-export default function MyHistory() {
+export default function myHistory({ navigation }) {
   const [items, setItems] = useState([
     {
       id: '1',
       name: 'Villanova Hoodie',
       size: 'Medium',
-      image: require('./assets/item1.jpg'),
+     // image: require('./assets/item1.jpg'),
       price: 49.99,
-      description: 'decscription',
-      caption: 'Sold'
+      description: 'Navy blue hoodie with white embroidered "Villanova" on the front. Made by Champion',
+      caption: 'Sold!'
     },
     {
       id: '2',
       name: 'Aritzia Gold Dress',
       size: 'Small',
-      image: require('./assets/item2.jpg'),
+     // image: require('./assets/item2.jpg'),
       price: 59.99,
-      description: 'description',
-      caption: 'Click to view details'
+      description: 'Satin gold mini dress with adjustable spagetti straps',
+      caption: 'Sold!'
     },
     {
       id: '3',
       name: 'New Balance',
       size: '7.5',
-      image: require('./assets/item3.jpg'),
+      //image: require('./assets/item3.jpg'),
       price: 79.99,
-      description: 'This is item 3',
-      caption: 'Click to view details'
+      description: 'Dark grey New Balance sneakers, never been worn!',
+      caption: 'For Sale'
     },
     {
       id: '4',
-      name: 'Item 4',
-      size: 'Small',
-      image: require('./assets/item4.jpg'),
-      price: 49.99,
-      description: 'This is item 4',
-      caption: 'Click to view details'
+      name: 'Light Blue Madewell Jeans',
+      size: '25',
+     // image: require('./assets/item4.jpg'),
+      price: 69.99,
+      description: 'Straight leg light blue jeans.',
+      caption: 'Sold'
     },
   ]);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.itemContainer}>
+    <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('itemDetails')}>
       <Image source={item.image} style={styles.itemImage} />
       <Text style={styles.itemName}>{item.name}</Text>
       <Text style={styles.itemSize}>{item.size}</Text>

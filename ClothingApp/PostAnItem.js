@@ -43,4 +43,6 @@ const styles = StyleSheet.create({
       padding: 20
     },
     label: {
-      fontSize: 16,
+      fontSize: 16
+    }
+  });
