@@ -1,5 +1,6 @@
 {
   "expo": {
+    
     "name": "ClothingApp",
     "slug": "ClothingApp",
     "version": "1.0.0",
@@ -9,7 +10,15 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "plugins": [
+        [
+          "expo-camera",
+          {
+            "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+          }
+        ]
+      ]
     },
     "assetBundlePatterns": [
       "**/*"
