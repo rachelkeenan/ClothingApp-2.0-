@@ -1,84 +1,175 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Image, StyleSheet,TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Camera } from 'expo-camera';
 
-const items = [
-  {
-    id: 1,
-    picture: 'https://images.sidearmdev.com/resize?url=https%3a%2f%2fdxbhsrqyrr690.cloudfront.net%2fsidearm.nextgen.sites%2fvillanova.com%2fimages%2f2022%2f8%2f15%2fAnastasia_Galanou.JPG&width=300&type=jpeg',
-    price: 10.99,
-    size: 'M',
-    description: 'Lorem ipsum dolor sit amet',
-    status: 'In Stock'
-  },
-  {
-    id: 2,
-    picture: 'https://example.com/item2.jpg',
-    price: 15.99,
-    size: 'L',
-    description: 'Consectetur adipiscing elit',
-    status: 'Out of Stock'
-  },
-  {
-    id: 3,
-    picture: 'https://example.com/item3.jpg',
-    price: 12.99,
-    size: 'S',
-    description: 'Sed do eiusmod tempor incididunt',
-    status: 'In Stock'
+function iOS() {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const cameraRef = useRef(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      const options = { quality: 0.5, base64: true };
+      const data = await cameraRef.current.takePictureAsync(options);
+      console.log(data.uri);
+    }
+  };
+
+  if (hasPermission === null) {
+    return <View />;
   }
-];
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+  return (
+    <View style={{ flex: 1 }}>
+      <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            style={{
+              flex: 0.1,
+              alignSelf: 'flex-end',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}>
+            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flex: 0.1,
+              alignSelf: 'flex-end',
+              alignItems: 'center',
+            }}
+            onPress={takePicture}>
+            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Snap </Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>
+  );
+}
 
-const MyHistory = () => {
+//////
+
+
+const PostItem = () => {
+  const [picture, setPicture] = useState('');
+  const [size, setSize] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [caption, setCaption] = useState('');
+
+  const handleSubmit = () => {
+    // Here you can implement the logic to post the item to a server or store it locally
+    console.log({ picture, size, price, description, caption });
+  };
+
   return (
     <View style={styles.container}>
-      {items.map(item => (
-        <View key={item.id} style={styles.item}>
-          <Image source={{ uri: item.picture }} style={styles.image} />
-          <View style={styles.details}>
-            <Text style={styles.price}>${item.price}</Text>
-            <Text style={styles.size}>{item.size}</Text>
-            <Text style={styles.description}>{item.description}</Text>
-            <Text style={styles.status}>{item.status}</Text>
-          </View>
-        </View>
-      ))}
+      <Text style={styles.heading}>Upload New Item</Text>
+      <Text style={styles.label}></Text>
+      <Button 
+      style = {styles.button}
+      onPress={iOS()}
+      title="Take Picture"
+    />
+        {/* style={styles.input}
+        placeholder="Take Pic"
+        onChangeText={setPicture}
+        onChange={iOS()}
+        value={picture}
+      /> */}
+      <Text style={styles.label}>Size</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter the size of the item"
+        onChangeText={setSize}
+        value={size}
+      />
+      <Text style={styles.label}>Price</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter the price of the item"
+        onChangeText={setPrice}
+        value={price}
+      />
+      <Text style={styles.label}>Description</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter a description of the item"
+        onChangeText={setDescription}
+        value={description}
+      />
+      <Text style={styles.label}>Caption</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter a caption for the item"
+        onChangeText={setCaption}
+        value={caption}
+      />
+      <View style={styles.imageContainer}>
+        {picture ? (
+          <Image source={{ uri: picture }} style={styles.image} />
+        ) : null}
+      </View>
+      <Button style={styles.button} title="Post Item" onPress={handleSubmit} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20
   },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  label: {
+    fontWeight: 'bold',
+    marginTop: 10,
+    fontSize: 30
+  },
+  heading: {
+    fontSize:50,
+    fontWeight: 'bold',
+    marginTop: 10
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+    marginTop: 5,
+    marginBottom: 10
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20
+  },
+  button: {
+    backgroundColor:'black',
+    fontSize:100
   },
   image: {
-    width: 100,
-    height: 100,
-    marginRight: 10
-  },
-  details: {
-    flex: 1
-  },
-  price: {
-    fontWeight: 'bold'
-  },
-  size: {
-    marginTop: 5
-  },
-  description: {
-    marginTop: 5
-  },
-  status: {
-    marginTop: 5,
-    color: '#888'
+    width: 200,
+    height: 200,
+    resizeMode: 'cover'
   }
 });
 
-export default MyHistory;
+export default PostItem;

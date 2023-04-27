@@ -1,48 +1,73 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Camera } from 'expo-camera';
 
-export default function PostItem() {
-  const [picture, setPicture] = useState(null);
-  const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [caption, setCaption] = useState('');
+export default function CameraExample() {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const handlePost = () => {
-    // code to post item data to server or do something with it
-    console.log({
-      picture,
-      size,
-      price,
-      description,
-      caption
-    });
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const takePicture = async () => {
+    if (cameraRef) {
+      let photo = await cameraRef.takePictureAsync();
+      console.log(photo);
+    }
   };
 
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Picture</Text>
-      <Image source={{ uri: picture }} style={styles.image} />
-      <Button title="Choose Picture" onPress={() => { /* code to choose picture */ }} />
-      <Text style={styles.label}>Size</Text>
-      <TextInput style={styles.input} value={size} onChangeText={setSize} />
-      <Text style={styles.label}>Price</Text>
-      <TextInput style={styles.input} value={price} onChangeText={setPrice} />
-      <Text style={styles.label}>Description</Text>
-      <TextInput style={styles.input} value={description} onChangeText={setDescription} />
-      <Text style={styles.label}>Caption</Text>
-      <TextInput style={styles.input} value={caption} onChangeText={setCaption} />
-      <Button title="Post Item" onPress={handlePost} />
+      <Camera style={styles.camera} type={type} ref={ref => setCameraRef(ref)}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={takePicture}>
+            <Text style={styles.text}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20
-    },
-    label: {
-      fontSize: 16
-    }
-  });
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  camera: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  button: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    borderRadius: 5,
+    padding: 10,
+    margin: 20,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
