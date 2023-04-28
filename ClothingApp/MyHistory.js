@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    backgroundColor:'white',
-    justifyContent: 'flex-end'
+    backgroundColor:'white'
   },
   image: {
     width: 100,
