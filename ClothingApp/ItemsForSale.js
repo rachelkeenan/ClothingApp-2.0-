@@ -1,34 +1,31 @@
 import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+
 
 export default function ItemsForSale(){
-    
-    const Selling = [
-        {key: '001', article: 'Green American Eagle Sweater', size: 'small', price: 4},
-        {key: '002', article: 'Pink Free People Dress', size: 'large', price: 30},
-        {key: '003', article: 'New Balance', size: '7.5', price: 79.99},
-        // {key: '004', article: 'Previous Posts', size: 'large', price: '$30'}
+  
+    //dataSource contains the data we want rendered as a list
+    //the dataSource should contain a unique key for each item in the array
+ 
+    const dataSource = [
+        {key: '001', tab: 'Items for Sale', description: 'friend'},
+        {key: '002', tab: 'Post an Item', description: 'friend'},
+        {key: '003', tab: 'My Cart'},
+        {key: '004', tab: 'Previous Posts'}
       ];
-
-      // const [hungry, setHungry] = useState("I am hungry, please feed me");
-      const [addToCart, addedToCart] = useState(false);
    
+      //the renderItem prop takes a function. The function has a parameter which
+      //is an item in the data source. Place the item in a component to display the item.
   return (
     <View style={styles.container}>
       <FlatList
-        data={Selling}
+        data={dataSource}
         renderItem={({item}) =>    
         <TouchableOpacity onPress={console.log("Pressed")}>    
         <View style={styles.border}>
-        <Text style={styles.item}>{item.article}</Text>  
-        <Text style={styles.item}>{item.size}</Text>
-        <Text style={styles.item}>{item.price}</Text> 
-        <Button title="Add to cart" disabled={addedToCart} 
-        onPress={()=> {
-          // addToCart("Added!");
-          addedToCart(true);
-      }}/>
+        <Text style={styles.item}>{item.tab}</Text>  
+        <Text style={styles.item}>{item.description}</Text>  
         </View>
         </TouchableOpacity>
         }
@@ -37,6 +34,7 @@ export default function ItemsForSale(){
   );
 }
  
+
 const styles = StyleSheet.create({
     container: {
      flex: 1,

@@ -6,9 +6,15 @@ import ItemsForSale from './ItemsForSale';
 import PostAnItem from './PostAnItem';
 import MyCart from './MyCart';
 import MyHistory from './MyHistory';
+import BlueJeans from './BlueJeans';
+import GoldDress from './GoldDress';
+import Sneakers from './Sneakers';
+import Hoodie from './Hoodie';
+import ItemInfo from './ItemInfo';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FloralDress from './FloralDress';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +29,12 @@ export default function App() {
     <Stack.Screen name='Post an Item' component={PostAnItem} />
     <Stack.Screen name='My Cart' component={MyCart} />
     <Stack.Screen name='My History' component={MyHistory} />
+    <Stack.Screen name='Blue Jeans' component={BlueJeans} />
+    <Stack.Screen name='Gold Dress' component={GoldDress} />
+    <Stack.Screen name='Sneakers' component={Sneakers} />
+    <Stack.Screen name='Hoodie' component={Hoodie} />
+    <Stack.Screen name='Floral Dress' component={FloralDress} />
+    <Stack.Screen name='Item Info' component={ItemInfo} />
     </Stack.Navigator>    
     </NavigationContainer>  
   );

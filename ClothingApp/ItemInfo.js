@@ -1,13 +1,14 @@
 import { View, Text, TextInput, Button, Image, StyleSheet,TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera } from 'expo-camera';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 
 //////
 
 
-const PostItem = () => {
+const ItemInfo = ( { navigation }) => {
   const [picture, setPicture] = useState('');
   const [size, setSize] = useState('');
   const [price, setPrice] = useState('');
@@ -26,13 +27,6 @@ const PostItem = () => {
       <Text></Text>
       <Text style={styles.subheading}>Upload New Item</Text>
       <Text></Text>
-      <Button
-      onPress={iOS()}
-      onChange={iOS()}
-      title="Take Picture"
-      onChangeText={setPicture}
-      value={picture}
-    />
       
       <Text style={styles.label}>  Name</Text>
       <TextInput
@@ -67,77 +61,13 @@ const PostItem = () => {
           <Image source={{ uri: picture }} style={styles.image} />
         ) : null}
       </View>
-      <Button style={styles.button} title="Post Item" onPress={handleSubmit} />
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <Button style={styles.button} title="Post Item" onPress={() => navigation.navigate('Home')}></Button>
+      </TouchableOpacity>
     </View>
   );
 
 
-///////
-
-function iOS() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const cameraRef = useRef(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  const takePicture = async () => {
-    if (cameraRef.current) {
-      const options = { quality: 0.5, base64: true };
-      const data = await cameraRef.current.takePictureAsync(options);
-      console.log(data.uri);
-    }
-  };
-
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
-  return (
-    <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
-            }}
-            onPress={takePicture}>
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Snap </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>
-  );
-}
 
 
 };
@@ -182,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostItem;
+export default ItemInfo;

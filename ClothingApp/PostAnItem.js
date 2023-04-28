@@ -1,73 +1,127 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, Button, Image, TextInput, StyleSheet,TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import { Camera } from 'expo-camera';
+import React, { useState, useEffect, useRef } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PostItem from './MyCart';
 
-export default function CameraExample() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+ function PostAnItem( { navigation }) {
+  //////////
+  const [picture, setPicture] = useState('');
+  const [size, setSize] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [caption, setCaption] = useState('');
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  const takePicture = async () => {
-    if (cameraRef) {
-      let photo = await cameraRef.takePictureAsync();
-      console.log(photo);
-    }
+  const handleSubmit = () => {
+    // Here you can implement the logic to post the item to a server or store it locally
+    console.log({ picture, size, price, description, caption });
+  };
+  //////////
+  const onPress = () => {
+    props.navigation.navigate('Home');
   };
 
-  if (hasPermission === null) {
-    return <View />;
+  //////////
+  //const Stack = createStackNavigator();
+
+  ////////
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+useEffect(() => {
+    (async () => {
+      const cameraStatus = await Camera.requestPermissionsAsync();
+      setHasCameraPermission(cameraStatus.status === 'granted');
+})();
+  }, []);
+const takePicture = async () => {
+    if(camera){
+        const data = await camera.takePictureAsync(null)
+        setImage(data.uri);
+    }
   }
-  if (hasPermission === false) {
+
+  if (hasCameraPermission === false) {
     return <Text>No access to camera</Text>;
   }
   return (
-    <View style={styles.container}>
-      <Camera style={styles.camera} type={type} ref={ref => setCameraRef(ref)}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
-            <Text style={styles.text}>Take Picture</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>
+   <View style={{ flex: 1}}>
+    <Text></Text>
+    <Text style={styles.heading}>VILLANOVA UNIVERSITY</Text>
+    <Text style={styles.subheading}>Post an Item for Sale</Text>
+    <Text></Text>
+
+
+      <View style={styles.cameraContainer}>
+            <Camera 
+            ref={ref => setCamera(ref)}
+            style={styles.fixedRatio} 
+            type={type}
+            ratio={'1:1'} />
+      </View>
+      <Button
+            title="Flip Image"
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}>
+        </Button>
+       <Button title="Take Picture" onPress={() => takePicture()} />
+        {image && <Image source={{uri: image}} style={{flex:1}}/>}
+
+
+        
+        
+
+      <View style={styles.imageContainer}>
+        {picture ? (
+          <Image source={{ uri: picture }} style={styles.image} />
+        ) : null}
+      </View>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('Item Info')}>
+      <Button style={styles.button} title="Add information" onPress={() => navigation.navigate('Item Info')}></Button>
+      </TouchableOpacity> */}
+      <TouchableOpacity onPress={() => navigation.navigate('Item Info')}>
+        
+        </TouchableOpacity>
+          
+
+   </View>
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
+  cameraContainer: {
+      flex: 1,
+      flexDirection: 'row',
   },
-  camera: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  button: {
-    flex: 0.1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    borderRadius: 5,
-    padding: 10,
-    margin: 20,
-  },
-  text: {
-    fontSize: 18,
+  heading:{
+    fontSize: 35,
     fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
+    backgroundColor: '#00205B'
   },
+  subheading:{
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#00205B'
+  },
+  fixedRatio:{
+      flex: 1,
+      aspectRatio: 1
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginTop: 100,
+    marginBottom: 0
+  }
 });
+
+export default PostItem;
