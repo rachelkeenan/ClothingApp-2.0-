@@ -1,105 +1,88 @@
-import { Text, View, Button, Image, TextInput, StyleSheet,TouchableOpacity, ScrollView, FlatList} from 'react-native';
-import { Camera } from 'expo-camera';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 
+export default function PostAnItem({ navigation }) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [capturedPhoto, setCapturedPhoto] = useState(null);
+  const cameraRef = useRef(null);
 
- function PostAnItem( { navigation }) {
-  //////////
-  const [picture, setPicture] = useState('');
-  const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [caption, setCaption] = useState('');
-
-  const handleSubmit = () => {
-    // Here you can implement the logic to post the item to a server or store it locally
-    console.log({ picture, size, price, description, caption });
-  };
-  //////////
-  const onPress = () => {
-    props.navigation.navigate('Home');
-  };
-
-  //////////
-  //const Stack = createStackNavigator();
-
-  ////////
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [camera, setCamera] = useState(null);
-  const [image, setImage] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-useEffect(() => {
+  useEffect(() => {
     (async () => {
-      const cameraStatus = await Camera.requestPermissionsAsync();
-      setHasCameraPermission(cameraStatus.status === 'granted');
-})();
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
   }, []);
-const takePicture = async () => {
-    if(camera){
-        const data = await camera.takePictureAsync(null)
-        setImage(data.uri);
-    }
-  }
 
-  if (hasCameraPermission === false) {
+  const handleCameraType = () => {
+    setCameraType(
+      cameraType === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
+
+  const handleTakePicture = async () => {
+    if (cameraRef.current) {
+      try {
+        const options = { quality: 0.5, base64: true };
+        const photo = await cameraRef.current.takePictureAsync({ options, aspect: [1, 1] });
+        setCapturedPhoto(photo);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleSavePicture = async () => {
+    if (capturedPhoto) {
+      navigation.navigate('ItemInfo', { capturedPhoto });
+    }
+  };
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
   return (
-   <View style={{ flex: 1}}>
-    <Text></Text>
-    <Text style={styles.heading}>VILLANOVA UNIVERSITY</Text>
-    <Text style={styles.subheading}>Post an Item for Sale</Text>
-    <Text></Text>
-
-
-      <View style={styles.cameraContainer}>
-            <Camera 
-            ref={ref => setCamera(ref)}
-            style={styles.fixedRatio} 
-            type={type}
-            ratio={'1:1'} />
-      </View>
-      <Button
-            title="Flip Image"
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-        </Button>
-       <Button title="Take Picture" onPress={() => takePicture()} />
-        {image && <Image source={{uri: image}} style={{flex:1}}/>}
-
-
-        
-        
-
-      <View style={styles.imageContainer}>
-        {picture ? (
-          <Image source={{ uri: picture }} style={styles.image} />
-        ) : null}
-      </View>
-      {/* <TouchableOpacity onPress={() => navigation.navigate('Item Info')}>
-      <Button style={styles.button} title="Add information" onPress={() => navigation.navigate('Item Info')}></Button>
-      </TouchableOpacity> */}
-      <TouchableOpacity onPress={() => navigation.navigate('Item Info')}>
-        
-        </TouchableOpacity>
-          
-
-   </View>
+    <View style={styles.container}>
+      <Text style={styles.heading}>VILLANOVA UNIVERSITY</Text>
+        <Text></Text>
+        <Text style={styles.subheading}>Take a picture of your item:</Text>
+        <Text></Text>
+      <TouchableOpacity style={styles.savebutton} onPress={handleSavePicture}>
+            <Text style={styles.text}>Add Information</Text>
+          </TouchableOpacity>
+      <Camera style={styles.camera} type={cameraType} ref={cameraRef}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleCameraType}>
+            <Text style={styles.text}>Flip</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleTakePicture}>
+            <Text style={styles.text}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+      {capturedPhoto && (
+        <View style={styles.preview}>
+          <Image source={{ uri: capturedPhoto.uri }} style={styles.previewImage} />
+        </View>
+      )}
+    </View>
   );
 }
 
-
 const styles = StyleSheet.create({
-  cameraContainer: {
-      flex: 1,
-      flexDirection: 'row',
+  container: {
+    flex: 1,
   },
   heading:{
     fontSize: 35,
@@ -113,15 +96,52 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#00205B'
   },
-  fixedRatio:{
-      flex: 1,
-      aspectRatio: 1
-  },
-  imageContainer: {
+  camera: {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 100,
-    marginBottom: 0
+    justifyContent: 'flex-end',
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    marginBottom: 20,
+  },
+  button: {
+    flex: 0.3,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    marginHorizontal: 10,
+    borderRadius: 5,
+  },
+  savebutton: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+
+  },
+  text: {
+    fontSize: 18,
+    color: '#000',
+  },
+  preview: {
+    position: 'absolute',
+    bottom: 100,
+    left: 0,
+    right: 0,
+    alignItems: 'center'
+  },
+  previewImage: {
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    marginBottom: 20,
   }
 });
 
 export default PostAnItem;
+

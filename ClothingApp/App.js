@@ -15,10 +15,11 @@ import Hat from './Hat';
 import PinkSkirt from './PinkSkirt';
 import Leggings from './Leggings';
 import GraySweatpants from './GraySweatpants';
+import FloralDress from './FloralDress';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FloralDress from './FloralDress';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +39,7 @@ export default function App() {
     <Stack.Screen name='Sneakers' component={Sneakers} />
     <Stack.Screen name='Hoodie' component={Hoodie} />
     <Stack.Screen name='Floral Dress' component={FloralDress} />
-    <Stack.Screen name='Item Info' component={ItemInfo} />
+    <Stack.Screen name='ItemInfo' component={ItemInfo} />
 
     <Stack.Screen name='Hat' component={Hat} />
     <Stack.Screen name='PinkSkirt' component={PinkSkirt} />

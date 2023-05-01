@@ -1,6 +1,9 @@
 import { StyleSheet, Text, View, Image, ScrollView, Button, FlatList } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import { View, Text, Image, StyleSheet, FlatList, ScrollView,TouchableOpacity } from 'react-native';
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
     color: '#888',
     textAlign:'right'
   }
+
 });
 
 export default MyCart;
