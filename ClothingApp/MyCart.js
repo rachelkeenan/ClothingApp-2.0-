@@ -38,7 +38,7 @@ const MyCart = ( { navigation }) => {
       <Text></Text>
         <Text style={styles.heading}>VILLANOVA UNIVERSITY</Text>
         <Text></Text>
-        <Text style={styles.subheading}>Items For Sale</Text>
+        <Text style={styles.subheading}>My Cart</Text>
         <Text></Text>
       {items.map(item => (
         <TouchableOpacity onPress={() => navigation.navigate(item.location)}>   
