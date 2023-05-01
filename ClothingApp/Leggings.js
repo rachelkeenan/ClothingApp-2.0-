@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
-const Hat = () => {
+const Leggings = () => {
   const item = {
-    name: 'Navy Villanova Hat',
-    image: 'https://media.rallyhouse.com/homepage/4803133-1.jpg?tx=f_auto,c_fit,w_730,h_730',
-    price: 15.99,
-    size: 'N/A',
-    description: 'Navy blue hat with Villanova "V" on the front.',
+    name: 'Lulu Lemon Leggings',
+    image: 'https://images.lululemon.com/is/image/lululemon/LW5EOJS_0001_1?wid=1080&op_usm=0.5,2,10,0&fmt=webp&qlt=80,1&fit=constrain,0&op_sharpen=0&resMode=sharp2&iccEmbed=0&printRes=72',
+    price: 53.99,
+    size: 'L',
+    description: 'Black, Lulu Lemon leggings. Never Used.',
     status: 'For Sale',
-    location: 'Hat'
+    location: 'Leggings'
   };
 
-  const [cart, setCart] = useState(false);
-    
-    const addToCart = () => {
-      setCart(true);
-    }
 
   return (
     <View style={styles.container}>
@@ -31,11 +26,6 @@ const Hat = () => {
       <Text style={styles.size}>SIZE: {item.size}</Text>
       <Text style={styles.description}>{item.description}</Text>
       <Text></Text>
-      <Button
-        title="Add to Cart"
-        disabled={cart}
-        onPress={() => addToCart()}
-      />
       <Text></Text>
       <Text></Text>
     </View>
@@ -95,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Hat;
+export default Leggings;

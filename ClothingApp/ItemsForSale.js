@@ -36,7 +36,7 @@ const items = [
     size: 'M',
     description: 'Light pink, floral skirt, only worn once.',
     status: 'For Sale',
-    location: 'Skirt'
+    location: 'PinkSkirt'
   },
   {
     id: 4,

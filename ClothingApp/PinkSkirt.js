@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
-const Hat = () => {
+const PinkSkirt = () => {
   const item = {
-    name: 'Navy Villanova Hat',
-    image: 'https://media.rallyhouse.com/homepage/4803133-1.jpg?tx=f_auto,c_fit,w_730,h_730',
-    price: 15.99,
-    size: 'N/A',
-    description: 'Navy blue hat with Villanova "V" on the front.',
+    name: 'American Eagle Skirt',
+    image: 'https://s7d2.scene7.com/is/image/aeo/0313_4290_615_f?$cat-main_large$&fmt=jpeg&defaultImage=0313_4290_615_f',
+    price: 12.99,
+    size: 'M',
+    description: 'Light pink, floral skirt, only worn once.',
     status: 'For Sale',
-    location: 'Hat'
+    location: 'PinkSkirt'
   };
 
+  
   const [cart, setCart] = useState(false);
     
     const addToCart = () => {
       setCart(true);
     }
+
 
   return (
     <View style={styles.container}>
@@ -95,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Hat;
+export default PinkSkirt;

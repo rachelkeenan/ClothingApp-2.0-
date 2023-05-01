@@ -12,7 +12,9 @@ import Sneakers from './Sneakers';
 import Hoodie from './Hoodie';
 import ItemInfo from './ItemInfo';
 import Hat from './Hat';
-import Skirt from './Skirt';
+import PinkSkirt from './PinkSkirt';
+import Leggings from './Leggings';
+import GraySweatpants from './GraySweatpants';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -39,7 +41,10 @@ export default function App() {
     <Stack.Screen name='Item Info' component={ItemInfo} />
 
     <Stack.Screen name='Hat' component={Hat} />
-    <Stack.Screen name='Skirt' component={Skirt} />
+    <Stack.Screen name='PinkSkirt' component={PinkSkirt} />
+    <Stack.Screen name='Leggings' component={Leggings} />
+    <Stack.Screen name='GraySweatpants' component={GraySweatpants} />
+
     </Stack.Navigator>    
     </NavigationContainer>  
   );

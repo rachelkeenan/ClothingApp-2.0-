@@ -3,7 +3,7 @@ import { Camera } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PostItem from './MyCart';
+
 
  function PostAnItem( { navigation }) {
   //////////
@@ -124,4 +124,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostItem;
+export default PostAnItem;

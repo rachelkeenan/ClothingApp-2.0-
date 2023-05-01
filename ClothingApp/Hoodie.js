@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
 const Hoodie = () => {
   const item = {
@@ -11,6 +11,13 @@ const Hoodie = () => {
     status: 'For Sale',
     location: 'Hoodie'
   };
+
+  const [cart, setCart] = useState(false);
+    
+  const addToCart = () => {
+    setCart(true);
+  }
+
 
   return (
     <View style={styles.container}>
@@ -26,9 +33,15 @@ const Hoodie = () => {
       <Text style={styles.size}>SIZE: {item.size}</Text>
       <Text style={styles.description}>{item.description}</Text>
       <Text></Text>
-      <Text></Text>
-      <Text></Text>
       <Text style={styles.status}>STATUS: {item.status}</Text>
+      <Text></Text>
+      <Button
+        title="Add to Cart"
+        disabled={cart}
+        onPress={() => addToCart()}
+      />
+      <Text></Text>
+      <Text></Text>
     </View>
   );
 };

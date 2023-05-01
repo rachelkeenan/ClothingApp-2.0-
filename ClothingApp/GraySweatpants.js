@@ -1,16 +1,17 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
-const Skirt = () => {
+const GraySweatpants = () => {
   const item = {
-    name: 'American Eagle Skirt',
-    image: 'https://s7d2.scene7.com/is/image/aeo/0313_4290_615_f?$cat-main_large$&fmt=jpeg&defaultImage=0313_4290_615_f',
+    name: 'Gray Sweatpants',
+    image: 'https://www.pacsun.com/dw/image/v2/AAJE_PRD/on/demandware.static/-/Sites-pacsun_storefront_catalog/default/dw0e9098ab/product_images/0133600120005NEW_01_006.jpg?sw=1000',
     price: 12.99,
-    size: 'M',
-    description: 'Light pink, floral skirt, only worn once.',
+    size: 'XS',
+    description: 'Gray sweatpants.',
     status: 'For Sale',
-    location: 'Skirt'
+    location: 'GraySweatpants'
   };
+
 
   return (
     <View style={styles.container}>
@@ -21,14 +22,12 @@ const Skirt = () => {
     <Text></Text>
       <Text style={styles.subheading}>{item.name}</Text>
       <Image source={{ uri: item.image }} style={styles.image} />
-      {/* <Image source={item.image} style={styles.image} /> */}
       <Text style={styles.price}>${item.price}</Text>
       <Text style={styles.size}>SIZE: {item.size}</Text>
       <Text style={styles.description}>{item.description}</Text>
       <Text></Text>
       <Text></Text>
       <Text></Text>
-      <Text style={styles.status}>STATUS: {item.status}</Text>
     </View>
   );
 };
@@ -86,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Skirt;
+export default GraySweatpants;
