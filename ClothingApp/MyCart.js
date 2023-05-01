@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView, Button, FlatList } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
-import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList, ScrollView,TouchableOpacity } from 'react-native';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -55,8 +53,14 @@ const MyCart = ( { navigation }) => {
           </View>
         </View>
         </TouchableOpacity> 
+      
       ))}
     </ScrollView>
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CheckoutPage')}>
+            <Text style={styles.text}>Check out</Text>
+    </TouchableOpacity>
+    <Text></Text>
+    <Text></Text>
     </View>
 
   );
@@ -95,6 +99,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderColor:'#13B5EA',
     borderWidth:'2'
+  },
+  button: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00205B',
+    padding: 20,
+  },
+  text:{
+    fontSize: 30,
+    color: 'white',
   },
   details: {
     flex: 1

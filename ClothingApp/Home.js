@@ -24,11 +24,10 @@ export default function Home( { navigation }) {
       //is an item in the data source. Place the item in a component to display the item.
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>VILLANOVA UNIVERSITY</Text>
+      <Text style={styles.heading}>VILLANOVA  UNIVERSITY</Text>
       <Text style={styles.subheading}>Online Store</Text>
       <Text></Text>
-      <Image style={styles.image} source={{uri:'https://teamcolorcodes.com/wp-content/uploads/2017/11/Villanova-Wildcats-Logo-JPG.jpg'}}></Image>
-      <Text></Text>
+      <Image style={styles.image} source={{uri:'https://money-assets.money.com/mcp/2020/profile/216597.jpg'}}></Image>
       <FlatList
         data={dataSource}
         renderItem={({item}) =>    
@@ -40,6 +39,14 @@ export default function Home( { navigation }) {
         </TouchableOpacity> 
         }
       />
+      <View style={styles.footerContainer}>
+      <Image style={styles.logo} source={{uri:'https://teamcolorcodes.com/wp-content/uploads/2017/11/Villanova-Wildcats-Logo-JPG.jpg'}} />
+      <View style={styles.contactInfoContainer}>
+        <Text style={styles.contactInfoText}>800E Lancaster Ave</Text>
+        <Text style={styles.contactInfoText}>(484) 619-1234</Text>
+        <Text style={styles.contactInfoText}>onlinestore@villanova.edu</Text>
+      </View>
+      </View>
     </View>
   );
 }
@@ -47,7 +54,7 @@ export default function Home( { navigation }) {
 const styles = StyleSheet.create({
     container: {
      flex: 1,
-     paddingTop: 50,
+     paddingTop: 0,
      backgroundColor: 'white'
     },
     heading:{
@@ -55,16 +62,17 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
       color: 'white',
-      backgroundColor: '#00205B'
+      backgroundColor: '#00205B',
+      paddingVertical:20
     },
     subheading:{
-      fontSize: 30,
+      fontSize: 40,
       textAlign: 'center',
       color: '#00205B'
     },
     item: {
       alignItems: 'center',
-      padding: 10,
+      padding: 5,
       backgroundColor: '#00205B',
       color: 'white',
       fontSize: 30,
@@ -75,10 +83,29 @@ const styles = StyleSheet.create({
       sborderColor: 'white',
     },
     image: {
-      width: '30%',
-      height: 100,
-      marginBottom: 20,
+      width: '100%',
+      height: 200,
       alignSelf: 'center'
+    },
+    footerContainer: {
+      backgroundColor: '#fff',
+      padding: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    logo: {
+      width: 100,
+      height: 90,
+    },
+    contactInfoContainer: {
+      alignItems: 'flex-end',
+    },
+    contactInfoText: {
+      fontSize: 12,
+      lineHeight: 18,
+      marginBottom: 5,
+      color: '#333',
     }
   });  
 

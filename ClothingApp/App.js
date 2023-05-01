@@ -19,6 +19,7 @@ import FloralDress from './FloralDress';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CheckoutPage from './CheckoutPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -45,6 +46,7 @@ export default function App() {
     <Stack.Screen name='PinkSkirt' component={PinkSkirt} />
     <Stack.Screen name='Leggings' component={Leggings} />
     <Stack.Screen name='GraySweatpants' component={GraySweatpants} />
+    <Stack.Screen name='CheckoutPage' component={CheckoutPage} />
 
     </Stack.Navigator>    
     </NavigationContainer>  

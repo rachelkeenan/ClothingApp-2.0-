@@ -143,5 +143,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostAnItem;
+//export default PostAnItem;
 
